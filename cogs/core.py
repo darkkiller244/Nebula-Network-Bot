@@ -13,7 +13,8 @@ class critical(commands.Cog):
 
     initial_extensions = [
         'cogs.suggestion',
-        'cogs.trade',
+        'cogs.invite',
+        'cogs.group',
         'cogs.ping', ]
 
     # Auto complete testing function.
