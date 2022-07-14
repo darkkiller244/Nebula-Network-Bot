@@ -48,7 +48,7 @@ class critical(commands.Cog):
 
             load_embed.set_footer(text='All Commands Enabled')
             load_log_embed.set_footer(text='All Commands Enabled')
-            await interaction.response.send_message(embed=load_embed, ephemeral=True)
+            await interaction.response.send_message(embed=load_embed)
 
             log_channel = interaction.guild.get_channel(996958366343647272) or await interaction.guild.fetch_channel(996958366343647272)
             await log_channel.send(embed=load_log_embed)
@@ -70,7 +70,7 @@ class critical(commands.Cog):
 
             load_embed.set_footer(text='Command Enabled')
             load_log_embed.set_footer(text='Command Enabled')
-            await interaction.response.send_message(embed=load_embed, ephemeral=True)
+            await interaction.response.send_message(embed=load_embed)
 
             log_channel = interaction.guild.get_channel(996958366343647272) or await interaction.guild.fetch_channel(996958366343647272)
             await log_channel.send(embed=load_log_embed)
@@ -114,7 +114,7 @@ class critical(commands.Cog):
 
             unload_embed.set_footer(text='All Commands Disabled')
             unload_log_embed.set_footer(text='All Commands Disabled')
-            await interaction.response.send_message(embed=unload_embed, ephemeral=True)
+            await interaction.response.send_message(embed=unload_embed)
 
             log_channel = interaction.guild.get_channel(996958366343647272) or await interaction.guild.fetch_channel(996958366343647272)
             await log_channel.send(embed=unload_log_embed)
@@ -136,7 +136,7 @@ class critical(commands.Cog):
 
             unload_embed.set_footer(text='Command Disabled')
             unload_log_embed.set_footer(text='Command Disabled')
-            await interaction.response.send_message(embed=unload_embed, ephemeral=True)
+            await interaction.response.send_message(embed=unload_embed)
 
             log_channel = interaction.guild.get_channel(996958366343647272) or await interaction.guild.fetch_channel(996958366343647272)
             await log_channel.send(embed=unload_log_embed)
