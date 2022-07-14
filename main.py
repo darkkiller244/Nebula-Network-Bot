@@ -42,4 +42,3 @@ class Main(commands.Bot):
 
 bot = Main()
 bot.run(os.environ["DISCORD_TOKEN"])
-#bot.run(os.environ['DISCORD_TOKEN'])
