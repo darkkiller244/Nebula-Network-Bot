@@ -31,9 +31,7 @@ class critical(commands.Cog):
 
             for ext in self.initial_extensions:
                 # If cog not loaded
-                print(ext[5:])
                 if ext[5:] not in self.bot.cogs.keys():
-                    print(ext)
                     await self.bot.load_extension(ext)
 
             load_embed = discord.Embed(
@@ -44,9 +42,9 @@ class critical(commands.Cog):
 
             load_log_embed = discord.Embed(
                 title='All Commands Loaded',
-                description=f'{interaction.user} loaded all available extensions.',
+                description=f'**{interaction.user}** loaded **all** available extensions.',
                 timestamp=datetime.now(),
-                color=0x3f6782)  # Default
+                color=0xef484a)  # Red
 
             load_embed.set_footer(text='All Commands Enabled')
             load_log_embed.set_footer(text='All Commands Enabled')
@@ -66,7 +64,7 @@ class critical(commands.Cog):
 
             load_log_embed = discord.Embed(
                 title='Command Loaded',
-                description=f'{interaction.user} loaded the **{command_name}** extension.',
+                description=f'**{interaction.user}** loaded the **{command_name}** extension.',
                 timestamp=datetime.now(),
                 color=0x3f6782)  # Default
 
@@ -110,9 +108,9 @@ class critical(commands.Cog):
 
             unload_log_embed = discord.Embed(
                 title='All Commands Unloaded',
-                description=f'{interaction.user} unloaded all available extensions.',
+                description=f'**{interaction.user}** unloaded **all** available extensions.',
                 timestamp=datetime.now(),
-                color=0x3f6782)  # Default
+                color=0xef484a)  # Red
 
             unload_embed.set_footer(text='All Commands Disabled')
             unload_log_embed.set_footer(text='All Commands Disabled')
@@ -132,7 +130,7 @@ class critical(commands.Cog):
 
             unload_log_embed = discord.Embed(
                 title='Command Unloaded',
-                description=f'{interaction.user} unloaded the **{command_name}** extension.',
+                description=f'**{interaction.user}** unloaded the **{command_name}** extension.',
                 timestamp=datetime.now(),
                 color=0x3f6782)  # Default
 
@@ -172,7 +170,7 @@ class critical(commands.Cog):
 
             reload_log_embed = discord.Embed(
                 title='All Commands Reloaded',
-                description=f'{interaction.user} reloaded all available extensions.',
+                description=f'**{interaction.user}** reloaded all available extensions.',
                 timestamp=datetime.now(),
                 color=0x3f6782)  # Default
 
@@ -195,7 +193,7 @@ class critical(commands.Cog):
 
             reload_log_embed = discord.Embed(
                 title='Command Reloaded',
-                description=f'{interaction.user} reloaded the **{command_name}** extension.',
+                description=f'**{interaction.user}** reloaded the **{command_name}** extension.',
                 timestamp=datetime.now(),
                 color=0x3f6782)  # Default
 
