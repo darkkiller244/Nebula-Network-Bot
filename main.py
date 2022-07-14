@@ -41,5 +41,5 @@ class Main(commands.Bot):
 
 
 bot = Main()
-bot.run('OTk2MTQyMDI0NDMwNDUyODI2.G_LVn0.EBz2QcGZlmmTafcpmPuKHrvX3Pv6__GQoTJsuQ')
+bot.run(os.environ["DISCORD_TOKEN"])
 #bot.run(os.environ['DISCORD_TOKEN'])
