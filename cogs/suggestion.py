@@ -1,5 +1,6 @@
 from ast import alias
 from cProfile import label
+from logging import PlaceHolder
 import discord
 
 from discord import ActionRow, ButtonStyle, app_commands, ui
@@ -57,6 +58,14 @@ class suggestion(commands.Cog):
 
 class suggestion_modal(ui.Modal, title="New Suggestion"):
     answer_one = ui.TextInput(
+        label = "Suggestion Type",
+        style = discord.InputTextStyle.short,
+        placeholder='Game or Discord | If it\'s for a game please state which one',
+        required=True,
+        max_length=20
+    )
+    
+    answer_two = ui.TextInput(
         label="Suggestion", 
         style = discord.TextStyle.long, 
         placeholder='Input the suggestion here', 
@@ -67,7 +76,7 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
     async def on_submit(self, suggester_interaction: discord.Interaction):
         suggestion_embed = discord.Embed(
             title=self.title,
-            description=f'**{self.answer_one.label}**\n{self.answer_one}',
+            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}',
             timestamp=datetime.now(),
             color=0x3f6782 # Default
         )
@@ -88,9 +97,10 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
 
         class ConfirmationButtons(discord.ui.View):
             
-            def __init__(self, answer_one, *args, **kwargs):
+            def __init__(self, answer_one, answer_two, *args, **kwargs):
                 super().__init__(*args, **kwargs)
                 self.answer_one = answer_one
+                self.answer_two = answer_two
 
 
             @discord.ui.button(label="Accept", style=ButtonStyle.green)
@@ -106,7 +116,7 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
                 # Embed for staff channel
                 suggestion_embed = discord.Embed(
                     title='Suggestion Accepted',
-                    description=f'**{self.answer_one.label}**\n{self.answer_one}',
+                    description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}',
                     timestamp=datetime.now(),
                     color=0x49ba8b  # Green
                 )
@@ -120,7 +130,7 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
                 # Embed for suggestion channel
                 public_suggestion_embed = discord.Embed(
                     title="New Suggestion",
-                    description=f'**{self.answer_one.label}**\n{self.answer_one}',
+                    description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}',
                     timestamp=datetime.now(),
                     color=0x3f6782  # Default
                 )
@@ -136,6 +146,9 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
                 await suggestion_message.add_reaction('<:UpVote:996957606822285343>')
                 await suggestion_message.add_reaction('<:DownVote:996957630494937118>')
 
+                # Create thread here
+                await suggestion_message.create_thread(name="Suggestion Discussion", auto_archive_duration=10080)
+
             @discord.ui.button(label="Reject", style=ButtonStyle.red)
             async def reject(self, interaction: discord.Interaction, button: discord.ui.Button):
                 for item in self.children:
@@ -148,7 +161,7 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
 
                 reason_embed = discord.Embed(
                     title="Reason for Rejection",
-                    description=f"**Please provide the reason for rejecting:**\n{self.answer_one}",
+                    description=f"**Please provide the reason for rejecting:**\n{self.answer_two}",
                     color=0xef484a
                 )
                 
@@ -157,9 +170,10 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
 
                 class ReasonButtons(discord.ui.View):
                     
-                    def __init__(self, answer_one, *args, **kwargs):
+                    def __init__(self, answer_one, answer_two, *args, **kwargs):
                         super().__init__(*args, **kwargs)
                         self.answer_one = answer_one
+                        self.answer_two = answer_two
 
                     @discord.ui.button(label="Duplicate", style=ButtonStyle.primary)
                     async def reason_one(self, reason_one_interaction: discord.Interaction, button: discord.ui.Button):
@@ -171,14 +185,14 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
                         reason = "Your suggestion has been rejected because\nit is too similar to a suggestion already made."
                         rejection_embed = discord.Embed(
                             title="Suggestion Rejected",
-                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**Reason**\n{reason}',
+                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}\n\n**Reason**\n{reason}',
                             timestamp=datetime.now(),
                             color=0xef484a  # Red
                         )
 
                         staff_rejection_embed = discord.Embed(
                             title="Suggestion Rejected",
-                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**Reason:** Duplicate',
+                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}\n\n**Reason:** Duplicate',
                             timestamp=datetime.now(),
                             color=0xef484a  # Red
                         )
@@ -205,14 +219,14 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
                         reason = "Your suggestion has been rejected because\nit will not be feasible due to either roblox limitations, development limitations, or not intune with the game idea."
                         rejection_embed = discord.Embed(
                             title='Suggestion Rejected',
-                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**Reason**\n{reason}',
+                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}\n\n**Reason**\n{reason}',
                             timestamp=datetime.now(),
                             color=0xef484a  # Red
                         )
 
                         staff_rejection_embed = discord.Embed(
                             title="Suggestion Rejected",
-                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**Reason:** {button.label}',
+                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}\n\n**Reason:** {button.label}',
                             timestamp=datetime.now(),
                             color=0xef484a  # Red
                         )
@@ -239,14 +253,14 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
                         reason = "Your suggestion has been rejected because\nof inappropriate content."
                         rejection_embed = discord.Embed(
                             title='Suggestion Rejected',
-                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**Reason**\n{reason}',
+                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}\n\n**Reason**\n{reason}',
                             timestamp=datetime.now(),
                             color=0xef484a  # Red
                         )
 
                         staff_rejection_embed = discord.Embed(
                             title="Suggestion Rejected",
-                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**Reason:** {button.label}',
+                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}\n\n**Reason:** {button.label}',
                             timestamp=datetime.now(),
                             color=0xef484a  # Red
                         )
@@ -274,14 +288,14 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
                         reason = "Your suggestion has been rejected and\ndeemed a troll request, further suggestions of\nthis type may lead to punishment."
                         rejection_embed = discord.Embed(
                             title='Suggestion Rejected',
-                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**Reason**\n{reason}',
+                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}\n\n**Reason**\n{reason}',
                             timestamp=datetime.now(),
                             color=0xef484a  # Red
                         )
 
                         staff_rejection_embed = discord.Embed(
                             title="Suggestion Rejected",
-                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**Reason:** {button.label}',
+                            description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}\n\n**Reason:** {button.label}',
                             timestamp=datetime.now(),
                             color=0xef484a  # Red
                         )
@@ -307,12 +321,12 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
                         self.stop()
                     
                 # Prompting reason for rejection
-                await interaction.followup.send(embed=reason_embed, ephemeral=True, view=ReasonButtons(answer_one=self.answer_one))
+                await interaction.followup.send(embed=reason_embed, ephemeral=True, view=ReasonButtons(answer_one=self.answer_one, answer_two=self.answer_two))
 
         suggestion_response.set_author(name=suggester_interaction.user, icon_url=suggester_interaction.user.avatar)
         await suggester_interaction.response.send_message(embed=suggestion_response, ephemeral=True)
 
-        await review_channel.send(embed=suggestion_embed, view=ConfirmationButtons(answer_one=self.answer_one))
+        await review_channel.send(embed=suggestion_embed, view=ConfirmationButtons(answer_one=self.answer_one, answer_two=self.answer_two))
 
             
 
