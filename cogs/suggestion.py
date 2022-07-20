@@ -1,10 +1,6 @@
-from ast import alias
-from cProfile import label
-from logging import PlaceHolder
 import discord
 
-from discord import ActionRow, ButtonStyle, app_commands, ui
-from discord.ui import Button
+from discord import ButtonStyle, app_commands, ui
 from discord.ext import commands
 from datetime import datetime
 
@@ -14,7 +10,7 @@ class suggestion(commands.Cog):
         bot.tree.on_error = self.on_command_error
         self.bot = bot
     
-    @app_commands.command(name='suggestion',description='Submit a suggestion')
+    @app_commands.command(name='suggestion', description='Submit a suggestion')
     @app_commands.checks.has_role('Verified')
     async def suggestion(self, interaction: discord.Interaction):
         await interaction.response.send_modal(suggestion_modal())
@@ -59,7 +55,7 @@ class suggestion(commands.Cog):
 class suggestion_modal(ui.Modal, title="New Suggestion"):
     answer_one = ui.TextInput(
         label = "Suggestion Type",
-        style = discord.InputTextStyle.short,
+        style = discord.TextStyle.short,
         placeholder='Game or Discord | If it\'s for a game please state which one',
         required=True,
         max_length=20
@@ -333,8 +329,5 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
 
 
 async def setup(bot: commands.Bot) -> None:
-    await bot.add_cog(
-        suggestion(bot),
-        guilds=[discord.Object(id=848367847670284298)]
-    )
+    await bot.add_cog(suggestion(bot))
     

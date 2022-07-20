@@ -5,7 +5,7 @@ from discord import app_commands
 from discord.ext import commands
 
 
-class critical(commands.Cog):
+class core(commands.Cog):
 
     def __init__(self, bot: commands.Bot) -> None:
         bot.tree.on_error = self.on_command_error
@@ -273,7 +273,4 @@ class critical(commands.Cog):
 
 
 async def setup(bot: commands.Bot) -> None:
-    await bot.add_cog(
-        critical(bot),
-        guilds=[discord.Object(id=848367847670284298)],
-    )
+    await bot.add_cog(core(bot))

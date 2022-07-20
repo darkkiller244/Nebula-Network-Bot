@@ -60,7 +60,4 @@ class group(commands.Cog):
 
 
 async def setup(bot: commands.Bot) -> None:
-    await bot.add_cog(
-        group(bot),
-        guilds=[discord.Object(id=848367847670284298)]
-    )
+    await bot.add_cog(group(bot))
