@@ -30,5 +30,4 @@ class aclient(commands.Bot):
 
 
 client = aclient()
-#client.run('OTk2MTQyMDI0NDMwNDUyODI2.GfA-zq.IXt6n5hs_BkLR30hHLBfG7iTmkAwOwW2ISk3NA')
 client.run(os.environ["DISCORD_TOKEN"])
