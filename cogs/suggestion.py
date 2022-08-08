@@ -126,7 +126,7 @@ class suggestion_modal(ui.Modal, title="New Suggestion"):
                 # Embed for suggestion channel
                 public_suggestion_embed = discord.Embed(
                     title="New Suggestion",
-                    description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}',
+                    description=f'**{self.answer_one.label}**\n{self.answer_one}\n\n**{self.answer_two.label}**\n{self.answer_two}\n<@&1004875458501935225>',
                     timestamp=datetime.now(),
                     color=0x3f6782  # Default
                 )
